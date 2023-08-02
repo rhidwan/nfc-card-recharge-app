@@ -407,7 +407,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         gapH16,
                         SizedBox(
-                          height: Sizes.deviceHeight * .45,
+                          height: Sizes.deviceHeight * .48,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
