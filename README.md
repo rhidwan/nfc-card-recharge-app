@@ -15,7 +15,8 @@
   - [**Pages Included:**](#pages-included)
   - [**Dependencies:**](#dependencies)
   - [**System Requirements**](#system-requirements)
-  - [**Installation**](#installation)
+  - [**Installation**](#installation) - [1. Clone the repository](#1-clone-the-repository) - [2. Move to the desired folder](#2-move-to-the-desired-folder) - [3. Create Android, iOS \& Web Apps](#3-create-android-ios--web-apps) - [4. To run the app, simply write the following commands:](#4-to-run-the-app-simply-write-the-following-commands)
+    - [Project Structure](#project-structure)
   - [**Contributing**](#contributing)
   - [**License**](#license)
 
@@ -139,6 +140,59 @@ flutter pub get
 open -a simulator (to get iOS Simulator)
 flutter run
 flutter run -d chrome --web-renderer html (to see the best output)
+```
+
+### Project Structure
+
+After successful build, your application structure should look like this:
+
+```
+habitual
+├── android
+├── assets
+    ├── fonts
+    ├── icons
+    │   ├── navigation-bar
+    │   ├── others
+    │   └── social-media
+    ├── images
+    │   ├── delivery_screen
+    │   ├── intro_screen
+    │   ├── order_screen
+    │   ├── product_screen
+    │   ├── profile_screen
+    │   ├── search_screen
+    └── logo
+├── ios
+├── lib
+    ├── src
+    │   ├── common_widgets
+    │   ├── controllers
+    │   ├── core
+    │   ├── data
+    │   ├── domain
+    │   ├── presentation
+    │   ├── routes
+    │   ├── theme
+    ├── l10n
+    │   └── l10n.dart
+    ├── main.dart
+├── linux
+├── macos
+├── test
+├── web
+├── windows
+├── .gitignore
+├── analysis_options.yaml
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.MD
+├── CONTRIBUTING-PT-BR.md
+├── CONTRIBUTING.md
+├── l10n.yml
+├── LICENSE
+├── pubspec.yml
+├── README-PT-BR.md
+├── README.md
 ```
 
 ## **Contributing**
