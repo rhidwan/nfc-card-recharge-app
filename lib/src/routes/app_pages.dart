@@ -3,19 +3,13 @@ import 'package:get/get.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_up_screen.dart';
 import 'package:habitual/src/presentation/categories_screen/view/categories_screen.dart';
-import 'package:habitual/src/presentation/checkout_screen/view/checkout_confirmation_screen.dart';
-import 'package:habitual/src/presentation/checkout_screen/view/checkout_screen.dart';
-import 'package:habitual/src/presentation/introduction_screen/view/introduction_screen.dart';
-import 'package:habitual/src/presentation/my_interests_screen/view/edit_interests_screen.dart';
-import 'package:habitual/src/presentation/my_interests_screen/view/my_interests_screen.dart';
-import 'package:habitual/src/presentation/product_details_screen/view/view_product_details.dart';
+import 'package:habitual/src/presentation/connect_card_screen/view/checkout_confirmation_screen.dart';
+import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
+import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
+import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
 import 'package:habitual/src/presentation/registration_screen/view/registration_completed.dart';
 
 import '../presentation/base_screen/base_screen.dart';
-import '../presentation/onboarding_screen/view/onboarding1_screen.dart';
-import '../presentation/onboarding_screen/view/onboarding2_screen.dart';
-import '../presentation/onboarding_screen/view/onboarding3_screen.dart';
-import '../presentation/onboarding_screen/view/onboarding_screen.dart';
 import '../presentation/registration_screen/view/registration1_screen.dart';
 import '../presentation/registration_screen/view/registration2_screen.dart';
 import '../presentation/registration_screen/view/registration3_screen.dart';
@@ -36,34 +30,7 @@ abstract class AppPages {
     /* 
     * ===== Onboarding Pages =====
      */
-    GetPage(
-      name: AppRoutes.onBoardingRoute,
-      page: () => const OnboardingScreen(),
-      transitionDuration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-      transition: Transition.fadeIn,
-    ),
-    GetPage(
-      name: AppRoutes.onBoarding1Route,
-      page: () => const OnBoarding1Screen(),
-      transitionDuration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-      transition: Transition.fadeIn,
-    ),
-    GetPage(
-      name: AppRoutes.onBoarding2Route,
-      page: () => const OnBoarding2Screen(),
-      transitionDuration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-      transition: Transition.fadeIn,
-    ),
-    GetPage(
-      name: AppRoutes.onBoarding3Route,
-      page: () => const OnBoarding3Screen(),
-      transitionDuration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-      transition: Transition.fadeIn,
-    ),
+
     /* 
     * ===== Home Page =====
      */
@@ -89,7 +56,7 @@ abstract class AppPages {
      */
     GetPage(
       name: AppRoutes.checkoutRoute,
-      page: () => const CheckoutScreen(),
+      page: () => const ConnectCardScreen(),
       transitionDuration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
       transition: Transition.rightToLeft,
@@ -163,21 +130,7 @@ abstract class AppPages {
       curve: Curves.easeOut,
       transition: Transition.fadeIn,
     ),
-    //* ==== In App Pages ======
-    GetPage(
-      name: AppRoutes.editMyInterestsRoute,
-      page: () => const EditMyInterestsScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
-      name: AppRoutes.myInterestsRoute,
-      page: () => const MyInterestsScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-      transition: Transition.rightToLeft,
-    ),
+
     GetPage(
       name: AppRoutes.categoriesRoute,
       page: () => const CategoriesScreen(),
@@ -192,10 +145,6 @@ abstract class AppRoutes {
   static const introRoute = '/intro';
   static const signInRoute = '/signIn';
   static const signUpRoute = '/signUp';
-  static const onBoardingRoute = '/onBoarding';
-  static const onBoarding1Route = '/onBoarding1';
-  static const onBoarding2Route = '/onBoarding2';
-  static const onBoarding3Route = '/onBoarding3';
   static const registration1Route = '/registration1';
   static const registration2Route = '/registration2';
   static const registration3Route = '/registration3';

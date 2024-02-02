@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280384188382",
+    "project_id": "water-atm-d9acd",
+    "storage_bucket": "water-atm-d9acd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280384188382:android:cdf08f42e3ba005b0b374f",
+        "android_client_info": {
+          "package_name": "com.iqbal.wateratm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh814cQRPirkH7lLrmKqkwGiEzqXHUCHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

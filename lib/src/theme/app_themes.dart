@@ -6,7 +6,6 @@ import 'theme_export.dart';
 
 class AppThemes {
   final lightTheme = ThemeData.light().copyWith(
-    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.white,
     primaryColor: AppColors.yellow500,
     splashColor: AppColors.neutral100,
@@ -74,7 +73,6 @@ class AppThemes {
     ),
   );
   final darkTheme = ThemeData.dark().copyWith(
-    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.white, //*TODO: Change to a darker color
 // * ===== AppBar Theme ======
     appBarTheme: AppBarTheme(

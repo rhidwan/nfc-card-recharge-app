@@ -1,18 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habitual/src/common_widgets/custom_divider.dart';
-import 'package:habitual/src/presentation/product_details_screen/widgets/option_card.dart';
-import 'package:habitual/src/presentation/product_details_screen/widgets/page_dots_secondary.dart';
-import 'package:habitual/src/presentation/product_details_screen/widgets/product_reviewer_card.dart';
-import 'package:habitual/src/presentation/product_details_screen/widgets/rating_long.dart';
-import 'package:habitual/src/presentation/product_details_screen/widgets/text_cropping_widget.dart';
+import 'package:habitual/src/presentation/card_details_screen/widgets/option_card.dart';
 import 'package:habitual/src/routes/app_pages.dart';
+import 'package:habitual/src/common_widgets/svg_asset.dart';
 
 import '../../../common_widgets/common_widgets_export.dart';
 import '../../../core/core_export.dart';
 import '../../cart_screen/widgets/cart_product_card.dart';
-import '../../home_screen/widgets/main_card.dart';
+import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -124,7 +120,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   buttonWidth: 150,
                   buttonHeight: 50,
                   buttonColor: AppColors.neutral800,
-                  buttonLabel: 'Add to cart',
+                  buttonLabel: 'Recharge',
                   onPressed: () => showModalBottomSheet<void>(
                     // isScrollControlled: true,
                     isDismissible: true,
@@ -251,10 +247,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ),
         body: NestedScrollView(
-          headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) => [
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+          [
             SliverAppBar(
-              backgroundColor: AppColors.blue300,
+              leading: const Padding(
+                padding: EdgeInsets.only(
+                  left: Sizes.p24,
+                  top: Sizes.p16,
+                  bottom: Sizes.p16,
+                ),
+                child: SvgAsset(
+                  assetPath: AppAssets.appLogoBlackSmall,
+                ),
+              ),
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(
@@ -262,7 +267,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   child: PrimaryIconButton(
                     icon: AppIcons.shoppingCartIcon,
-                    onPressed: () {},
+                    onPressed: () => Get.offAllNamed(
+                      AppRoutes.productDetailsRoute,
+                    ),
                   ),
                 ),
               ],
@@ -276,40 +283,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   //* Product Image
-                  Stack(
-                    children: [
-                      Container(
-                        height: Sizes.deviceHeight * .50,
-                        color: AppColors.blue300,
-                        child: PageView.builder(
-                          controller: pageController,
-                          itemCount: productImages.length,
-                          onPageChanged: (value) => setState(() {
-                            currentIndex.value = value;
-                          }),
-                          itemBuilder: (_, index) => Container(
-                            color: AppColors.blue300,
-                            child: CachedNetworkImage(
-                              imageUrl: productImages[index],
-                              placeholder: (_, url) => const Center(
-                                child: CircularProgressIndicator.adaptive(),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      //* Page dots
-                      Positioned(
-                        bottom: 5,
-                        left: 0,
-                        right: 0,
-                        child: PageDotsSecondary(
-                          currentIndex: currentIndex.value,
-                          countLength: productImages.length,
-                        ),
-                      ),
-                    ],
-                  ),
+
                   //* Product Title
                   Padding(
                     padding: const EdgeInsets.all(
@@ -318,27 +292,83 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'DualSense Wireless Controller',
-                          style: Get.textTheme.headlineMedium,
+
+                        gapH16,
+                        //* Credit Card
+                        const CreditCard(),
+
+                        gapH8,
+
+                        const CustomDivider(hasText: false),
+                        gapH8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'UID',
+                              style: Get.textTheme.displayLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '121212121212',
+                              style: Get.textTheme.titleLarge?.copyWith(
+                                fontWeight: Fonts.interRegular,
+                              ),
+                            ),
+                          ],
                         ),
                         gapH8,
-                        Text(
-                          'Sony',
-                          style: Get.textTheme.titleLarge?.copyWith(
-                            color: AppColors.neutral600,
-                            fontWeight: Fonts.interRegular,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'last Recharge',
+                              style: Get.textTheme.displayLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '12/2023',
+                              style: Get.textTheme.titleLarge?.copyWith(
+                                fontWeight: Fonts.interRegular,
+                              ),
+                            ),
+                          ],
                         ),
                         gapH8,
-                        const RatingLong(
-                          value: 4.25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Balance',
+                              style: Get.textTheme.displayLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '\$79.99',
+                              style: Get.textTheme.headlineSmall,
+                            ),
+                          ],
                         ),
-                        gapH24,
-                        Text(
-                          'Options',
-                          style: Get.textTheme.titleLarge,
+                        gapH8,
+                        const CustomDivider(hasText: false),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Recharge',
+                              style: Get.textTheme.displayLarge,
+                            ),
+                            PrimaryTextButton(
+                              buttonLabel: "View History",
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
+
                         gapH8,
                         //* Available Colors
                         SizedBox(
@@ -350,77 +380,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             itemBuilder: (_, index) => OptionCard(
                               isActive: true,
                               inStock: true,
-                              price: 79.99,
-                              colorName: 'Black',
+                              price: 300,
+                              colorName: 'Recharge',
                               onTap: () {},
                             ),
                           ),
                         ),
                         gapH32,
-                        Text(
-                          'Description',
-                          style: Get.textTheme.displayLarge,
-                        ),
-                        gapH12,
-                        const TextCroppingWidget(
-                          text:
-                              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
-                        ),
-                        gapH32,
-                        Text(
-                          'Reviews',
-                          style: Get.textTheme.displayLarge,
-                        ),
-                        gapH24,
-                        const ProductReviewerCard(
-                          title: 'Consectetur tellus volutpat.',
-                          dateTime: 'January 1, 2023',
-                        ),
-                        gapH24,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: PrimaryOutlinedButton(
-                                title: 'Show all reviews',
-                                hasText: true,
-                                onPressed: () {},
-                              ),
-                            ),
-                          ],
-                        ),
-                        gapH32,
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                'Just for you',
-                                style: Get.textTheme.displayLarge,
-                              ),
-                            ),
-                            PrimaryTextButton(
-                              defaultTextStyle: true,
-                              buttonLabel: 'View all',
-                              onPressed: () {},
-                            )
-                          ],
-                        ),
-                        gapH16,
-                        SizedBox(
-                          height: Sizes.deviceHeight * .48,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: justForYouImages.length,
-                            separatorBuilder: (_, index) => gapW16,
-                            itemBuilder: (_, index) => MainCard(
-                              cardColor: justForYouColors[
-                                  index % justForYouColors.length],
-                              imageUrl: justForYouImages[index],
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
+
+
+
                       ],
                     ),
                   ),

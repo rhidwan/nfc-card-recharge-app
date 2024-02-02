@@ -37,6 +37,8 @@ class AppAssets {
   /* 
   * ==== Paralax Background Images ====
    */
+  static const introductionImage =
+      'assets/images/cover_image.jpg';
   static const paralaxImage1 =
       'assets/images/intro_screen/image-1.png';
   static const paralaxImage2 =

@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 
 import '../../../core/core_export.dart';
 
@@ -51,29 +51,11 @@ class ProductReviewerCard extends StatelessWidget {
           Text(
             'Massa morbi id lorem ultricies. Aliquet eu dolor cras ipsum hendrerit id ut habitant nisi. Lectus ipsum faucibus sed fringilla at tempor.',
             style: Get.textTheme.titleMedium?.copyWith(
-              color: AppColors.neutral600,
+              color: AppColors.neutral400,
               fontWeight: Fonts.interRegular,
             ),
           ),
-          gapH8,
-          Row(
-            children: [
-              const CircleAvatar(
-                maxRadius: Sizes.p16,
-                minRadius: Sizes.p16,
-                backgroundImage: CachedNetworkImageProvider(
-                  'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
-                ),
-              ),
-              gapW8,
-              Text(
-                'Brooklyn Simmons',
-                style: Get.textTheme.titleMedium?.copyWith(
-                  color: AppColors.neutral600,
-                ),
-              )
-            ],
-          ),
+          gapH8
         ],
       ),
     );

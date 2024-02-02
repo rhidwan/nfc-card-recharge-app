@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../home_screen/view/home_tab_screen.dart';
+import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
 import '../profile_screen/profile_tab_screen.dart';
-import '../search_screen/search_tab_screen.dart';
-import '../wishlist_screen/view/wishlist_tab_screen.dart';
 import 'widgets/custom_bottom_navbar.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -16,10 +13,9 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   final pageController = PageController();
   final screens = [
-    const HomeTabScreen(),
-    const WishlistTabScreen(),
+    const ConnectCardScreen(),
     const ProfileTabScreen(),
-    const SearchTabScreen(),
+    // const SearchTabScreen(),
   ];
 
   @override
