@@ -1,14 +1,30 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habitual/main.dart';
 import 'package:habitual/src/common_widgets/common_widgets_export.dart';
 import 'package:habitual/src/common_widgets/custom_divider.dart';
 import 'package:habitual/src/methods/auth/firebase_auth.dart';
 import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
+
 import 'package:habitual/src/routes/app_pages.dart';
 import 'package:habitual/src/common_widgets/svg_asset.dart';
 
+import 'dart:io';
+import 'dart:typed_data';
+
+
+import 'package:flutter/material.dart';
+import 'package:habitual/src/core/utils/extensions.dart';
+import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager/platform_tags.dart';
+import 'package:provider/provider.dart';
+
+import '../../../common_widgets/form_row.dart';
+import '../../../common_widgets/nfc_sessions.dart';
 import '../../../core/core_export.dart';
+import '../../tag/ndef_record.dart';
+
 
 class ConnectCardScreen extends StatefulWidget {
 
@@ -20,6 +36,8 @@ class ConnectCardScreen extends StatefulWidget {
 
 class _ConnectCardScreenState extends State<ConnectCardScreen> {
   var user = FirebaseAuthService.instance.getUser();
+
+  ValueNotifier<dynamic> result = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,7 @@ class _ConnectCardScreenState extends State<ConnectCardScreen> {
                   child: PrimaryIconButton(
                     icon: AppIcons.shoppingCartIcon,
                     onPressed: () => {
-                      FirebaseAuthService.instance.logOut();
+                      FirebaseAuthService.instance.logOut()
                     },
                   ),
                 ),
@@ -69,25 +87,76 @@ class _ConnectCardScreenState extends State<ConnectCardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Welcome ${user.email}",
+                        "Welcome",
                         style: Get.textTheme.displayLarge,
                       ),
-
                     ],
+                  ),
+                  gapH8,
+                  Text("${user.email}",
+                    style: Get.textTheme.bodyMedium,
                   ),
                   gapH16,
                   //* Credit Card
-                  const CreditCard(),
+                  const CreditCardEmpty(),
                   gapH24,
-
+                  isNfcAvalible ?
                   PrimaryButton(
                     buttonColor: AppColors.neutral800,
                     buttonLabel: 'Connect Card',
-                    onPressed: () => Get.offAllNamed(
-                      AppRoutes.productDetailsRoute,
-                    ),
-                  ),
+                    onPressed: () async {
+                      bool isAvailable = await NfcManager.instance.isAvailable();
+                      if (isAvailable == false) {
+                        return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  content: SizedBox(
+                                      height: 100,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text('TURN ON NFC !')
+                                        ],
+                                      )));
+                            });
+                      } else {
+                        NfcManager.instance.startSession(
+                            onDiscovered: (NfcTag tag) {
+                              // info.mark(_auth.firebaseAuth.currentUser.uid,
+                              //     tag.data['isodep']['identifier'][0]);
+                              print(tag.data);
+                              if (Navigator.of(context).canPop() == true) {
+                                Navigator.pop(context);
+                                NfcManager.instance.stopSession();
+                              }
+                              return Future(() => tag.data);
+                        });
+                        return showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  content: SizedBox(
+                                      height: 100,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.nfc, size: 50),
+                                          SizedBox(height: 10),
+                                          Text('Reading NFC')
+                                        ],
+                                      )));
+                            });
+                      }
+                    },
+                    // onPressed: () => Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) => TagReadPage.withDependency(),
+                    // )),
+                  ) : Text("NFC Not Available"),
                   gapH16,
+                  // consider: Selector<Tuple<{TAG}, {ADDITIONAL_DATA}>>
+
                 ],
               ),
             ),

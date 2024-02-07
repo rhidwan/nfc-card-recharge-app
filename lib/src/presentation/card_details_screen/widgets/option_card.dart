@@ -10,22 +10,21 @@ class OptionCard extends StatelessWidget {
     Key? key,
     required this.isActive,
     required this.onTap,
-    required this.price,
-    required this.inStock,
+    required this.amount,
+
     required this.colorName,
   }) : super(key: key);
 
   final bool isActive;
-  final bool inStock;
   final VoidCallback? onTap;
   final String colorName;
-  final double price;
+  final int amount;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Sizes.deviceWidth * .35,
-      height: Sizes.deviceHeight * .15,
+      width: Sizes.deviceWidth * .30,
+      height: Sizes.deviceHeight * .5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Sizes.p10),
         border: Border.all(
@@ -65,19 +64,8 @@ class OptionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\$${price.toStringAsFixed(2)}',
+                      '\Tk${amount}',
                       style: Get.textTheme.bodyLarge,
-                    ),
-                    gapH4,
-                    Text(
-                      inStock ? 'In Stock' : 'Out of Stock',
-                      style: inStock
-                          ? Get.textTheme.titleMedium?.copyWith(
-                              color: AppColors.green700,
-                            )
-                          : Get.textTheme.titleMedium?.copyWith(
-                              color: AppColors.red500,
-                            ),
                     ),
                   ],
                 ),

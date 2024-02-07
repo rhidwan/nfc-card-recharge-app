@@ -7,8 +7,13 @@ import 'package:get/get.dart';
 import 'package:habitual/l10n/string_hardcoded.dart';
 import 'package:habitual/src/methods/auth/firebase_auth.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
+import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
+import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
+import 'package:habitual/src/presentation/tag/read.dart';
+import 'package:nfc_manager/nfc_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'l10n/l10n.dart';
@@ -16,10 +21,10 @@ import 'src/core/core_export.dart';
 import 'src/routes/routes_export.dart';
 import 'src/theme/theme_export.dart';
 
-
+bool isNfcAvalible = false;
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  isNfcAvalible = await NfcManager.instance.isAvailable();
   await Firebase.initializeApp().then((value) => Get.put(FirebaseAuthService()));
   if (kIsWeb){
     await Firebase.initializeApp(options: const FirebaseOptions(
@@ -29,7 +34,11 @@ Future main() async {
         projectId: "water-atm-d9acd")
     );
   }
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => TagReadModel()),
+    ChangeNotifierProvider(create: (_) => NdefWriteModel()),
+  ],
+  child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

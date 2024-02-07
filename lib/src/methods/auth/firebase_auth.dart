@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
 import 'package:habitual/src/presentation/base_screen/base_screen.dart';
 import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
+import 'package:habitual/src/presentation/tag/read.dart';
 import '../../common_widgets/toast.dart';
 import 'package:get/state_manager.dart';
 
@@ -35,7 +36,7 @@ class FirebaseAuthService extends GetxController {
       });
     }else {
       Future.delayed(Duration(seconds: 1), () {
-        Get.offAll(() => const ConnectCardScreen());
+        Get.offAll(() => TagReadPage());
       })
      ;
     }
