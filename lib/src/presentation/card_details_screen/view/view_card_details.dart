@@ -2,10 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
 import 'package:habitual/src/common_widgets/custom_divider.dart';
 import 'package:habitual/src/common_widgets/nfc_sessions.dart';
 import 'package:habitual/src/common_widgets/toast.dart';
+import 'package:habitual/src/core/utils/ntag_write.dart';
 import 'package:habitual/src/models/record.dart';
 import 'package:habitual/src/presentation/card_details_screen/widgets/option_card.dart';
 import 'package:habitual/src/routes/app_pages.dart';
@@ -24,8 +26,10 @@ import '../../tag/read.dart';
 class NdefWriteModel with ChangeNotifier {
   // NdefWriteModel();
 
+
   Future<String?> handleTag(NfcTag tag, text) async {
     Iterable<WriteRecord> recordList = [];
+
 
     var textRecord = WellknownTextRecord(languageCode: "en", text: text);
     recordList = [
@@ -33,6 +37,7 @@ class NdefWriteModel with ChangeNotifier {
     ];
 
     final tech = Ndef.from(tag);
+    final card = NfcA.from(tag);
 
     if (tech == null){
       showToast(message: "Tag is not ndef");
@@ -47,7 +52,31 @@ class NdefWriteModel with ChangeNotifier {
 
     try {
       final message = NdefMessage(recordList.map((e) => e.record).toList());
-      await tech.write(message);
+      final bytes = Uint8List.fromList([0x1B, 0x32, 0x32, 0x32, 0x32]);
+      try {
+        var resp = await card!.transceive(data: bytes );
+
+        print(resp);
+        await Future.delayed(const Duration(milliseconds: 1000));
+      } on Exception catch(e){
+        print(e);
+        showToast(message: "Authentication Failed");
+      }
+      try{
+        await ntag2xxWriteText(card, text);
+      }on Exception catch(e){
+        showToast(message: e.toString());
+        return e.toString();
+      }
+      // try{
+      //   await tech.write(message);
+      // }on Exception catch(e){
+      //   print(e);
+      //   showToast(message: e.toString());
+      //   return "Something is wrong";
+      // }
+
+      
 
     } on PlatformException catch (e) {
       showToast(message:'Some error has occured.');
@@ -57,11 +86,12 @@ class NdefWriteModel with ChangeNotifier {
     }
     notifyListeners();
     showToast(message: "Recharge Successful");
-    return Get.to(TagReadPage());
+    return Get.to(() => TagReadPage());
     // return Get.to(CardDetailsScreen());
     // return 'Recharge completed';
   }
 }
+
 class CardDetailsScreen extends StatefulWidget {
   const CardDetailsScreen({super.key});
 
@@ -81,7 +111,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
   var rechargeOptions = [
     200, 300, 500
   ];
-  var recordsTowrite = "testToWriteFromFLUTTER";
+  var recordsTowrite = "entestToWriteFromFLUTTER";
   @override
   Widget build(BuildContext context) {
     return Consumer<TagReadModel>(builder: (context, model, _) {
@@ -167,6 +197,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       onPressed: () => startSession(context: context,
                         handleTag:(tag) => Provider.of<NdefWriteModel>(context, listen: false).handleTag(tag, recordsTowrite),
                       )
+
                   )
                ,
 

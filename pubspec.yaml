@@ -55,8 +55,8 @@ dependencies:
   fluttertoast: ^8.2.4
   nfc_manager: ^3.3.0
   provider: ^6.1.1
-
-
+  flutter_nfc_kit: ^3.4.1
+  ndef: ^0.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
