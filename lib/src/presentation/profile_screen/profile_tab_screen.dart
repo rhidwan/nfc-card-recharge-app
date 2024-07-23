@@ -8,7 +8,7 @@ import 'package:habitual/src/routes/app_pages.dart';
 
 import '../../common_widgets/common_widgets_export.dart';
 import '../../core/core_export.dart';
-import '../categories_screen/widgets/staggered_category_card.dart';
+import '../home_screen/widgets/staggered_category_card.dart';
 
 class ProfileTabScreen extends StatefulWidget {
   const ProfileTabScreen({super.key});

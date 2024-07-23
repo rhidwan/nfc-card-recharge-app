@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_up_screen.dart';
-import 'package:habitual/src/presentation/categories_screen/view/categories_screen.dart';
 import 'package:habitual/src/presentation/connect_card_screen/view/checkout_confirmation_screen.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
 import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
@@ -122,14 +121,6 @@ abstract class AppPages {
       transitionDuration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
       transition: Transition.fadeIn,
-    ),
-
-    GetPage(
-      name: AppRoutes.categoriesRoute,
-      page: () => const CategoriesScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-      transition: Transition.rightToLeft,
     ),
   ];
 }

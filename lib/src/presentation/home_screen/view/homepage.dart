@@ -17,7 +17,7 @@ import '../../../core/constants/app_sizes.dart';
 
 import '../../../core/utils/ntag_write.dart';
 import '../../../models/write_record.dart';
-import '../../categories_screen/widgets/staggered_category_card.dart';
+import '../widgets/staggered_category_card.dart';
 import 'package:get/get.dart';
 import 'package:habitual/main.dart';
 import 'package:habitual/src/common_widgets/common_widgets_export.dart';
