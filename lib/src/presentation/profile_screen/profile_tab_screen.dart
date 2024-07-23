@@ -149,27 +149,27 @@ class _ProfileTabScreenState extends State<ProfileTabScreen> {
                         ],
                       ),
                       gapH16,
-                      MasonryGridView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        crossAxisSpacing: Sizes.p16,
-                        mainAxisSpacing: Sizes.p16,
-                        itemCount: popularCategories.length,
-                        gridDelegate:
-                            const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (_, index) => StaggeredGridTile.count(
-                          crossAxisCellCount: 2,
-                          mainAxisCellCount: index.isEven ? 3 : 2,
-                          child: StaggeredCard(
-                            color: popularCategoriesColors[index],
-                            categoryName: popularCategories[index],
-                            imageUrl: popularCategoriesImage[index],
-                            onTap: () {},
-                          ),
-                        ),
-                      ),
+                      // MasonryGridView.builder(
+                      //   primary: false,
+                      //   shrinkWrap: true,
+                      //   crossAxisSpacing: Sizes.p16,
+                      //   mainAxisSpacing: Sizes.p16,
+                      //   itemCount: popularCategories.length,
+                      //   gridDelegate:
+                      //       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      //     crossAxisCount: 2,
+                      //   ),
+                      //   itemBuilder: (_, index) => StaggeredGridTile.count(
+                      //     crossAxisCellCount: 2,
+                      //     mainAxisCellCount: index.isEven ? 3 : 2,
+                      //     child: StaggeredCardButton(
+                      //       color: popularCategoriesColors[index],
+                      //       buttonName: popularCategories[index],
+                      //       imageUrl: popularCategoriesImage[index],
+                      //       onTap: () {},
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -7,11 +7,11 @@ import 'package:get/get.dart';
 import 'package:habitual/l10n/string_hardcoded.dart';
 import 'package:habitual/src/methods/auth/firebase_auth.dart';
 import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
+import 'package:habitual/src/presentation/bulk_recharge_screen/view/bulk_recharge.dart';
 import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
-import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
-import 'package:habitual/src/presentation/tag/read.dart';
+import 'package:habitual/src/presentation/home_screen/view/homepage.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -37,6 +37,10 @@ Future main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => TagReadModel()),
     ChangeNotifierProvider(create: (_) => NdefWriteModel()),
+    ChangeNotifierProvider(create: (_) => TagInitiateModel()),
+    ChangeNotifierProvider(create: (_) => TagInvalidateModel()),
+    ChangeNotifierProvider(create: (_) => NdefBulkRechargeModel()),
+
   ],
   child: MyApp()));
 }

@@ -9,8 +9,16 @@ class AppAssets {
   static const appLogoPrimary = 'assets/logo/logo-primary.svg';
   static const appLogoBlack = 'assets/logo/logo-black.svg';
   static const appLogoYellow = 'assets/logo/logo-yellow.svg';
+  static const appLogoSmall = "assets/logo/icon-small.svg";
 
-  /* 
+  // =-=======Card Icons=-============
+  static const cardRechargeIcon = "assets/card/bulk_recharge.svg";
+  static const cardInfoIcon = "assets/card/card_info.svg";
+  static const cardRefillIcon = "assets/card/refill.svg";
+  static const cardRemoveIcon = "assets/card/card_dump.svg";
+  static const cardConnectIcon = "assets/card/connectCard.svg";
+  /*
+
   * ============= Images ==============
    */
 

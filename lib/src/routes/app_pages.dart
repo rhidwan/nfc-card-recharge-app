@@ -4,7 +4,6 @@ import 'package:habitual/src/presentation/authentication_screen/view/sign_in_scr
 import 'package:habitual/src/presentation/authentication_screen/view/sign_up_screen.dart';
 import 'package:habitual/src/presentation/categories_screen/view/categories_screen.dart';
 import 'package:habitual/src/presentation/connect_card_screen/view/checkout_confirmation_screen.dart';
-import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
 import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
 import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
 import 'package:habitual/src/presentation/registration_screen/view/registration_completed.dart';
@@ -54,13 +53,7 @@ abstract class AppPages {
     /* 
     * ===== Payment Pages =====
      */
-    GetPage(
-      name: AppRoutes.checkoutRoute,
-      page: () => const ConnectCardScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-      transition: Transition.rightToLeft,
-    ),
+
     GetPage(
       name: AppRoutes.checkoutConfirmationRoute,
       page: () => const CheckoutConfirmationScreen(),

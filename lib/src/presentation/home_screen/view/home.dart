@@ -26,15 +26,15 @@ import '../../../core/core_export.dart';
 import '../../tag/ndef_record.dart';
 
 
-class ConnectCardScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
 
-  const ConnectCardScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
-  State<ConnectCardScreen> createState() => _ConnectCardScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _ConnectCardScreenState extends State<ConnectCardScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   var user = FirebaseAuthService.instance.getUser();
 
   ValueNotifier<dynamic> result = ValueNotifier(null);
@@ -131,7 +131,7 @@ class _ConnectCardScreenState extends State<ConnectCardScreen> {
                                 NfcManager.instance.stopSession();
                               }
                               return Future(() => tag.data);
-                        });
+                            });
                         return showDialog(
                             barrierDismissible: false,
                             context: context,

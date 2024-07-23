@@ -17,7 +17,7 @@
 //       );
 
 //       // Build the ProductDetailScreen widget with the product
-//       await tester.pumpWidget(MaterialApp(home: ProductDetailScreen(product)));
+//       await tester.pumpWidget(MaterialApp(home.dart: ProductDetailScreen(product)));
 
 //       // Verify that the product details are displayed correctly
 //       expect(find.text(product.title), findsOneWidget);
@@ -37,7 +37,7 @@
 //       );
 
 //       // Build the ProductsScreen widget with the product
-//       await tester.pumpWidget(MaterialApp(home: ProductsScreen()));
+//       await tester.pumpWidget(MaterialApp(home.dart: ProductsScreen()));
 
 //       // Tap the product item to open the ProductDetailScreen
 //       await tester.tap(find.text(product.title));
@@ -62,7 +62,7 @@
 //       );
 
 //       // Build the CartScreen widget with the product
-//       await tester.pumpWidget(MaterialApp(home: CartScreen()));
+//       await tester.pumpWidget(MaterialApp(home.dart: CartScreen()));
 
 //       // Add the product to the cart
 //       await tester.tap(find.text('Add to Cart'));

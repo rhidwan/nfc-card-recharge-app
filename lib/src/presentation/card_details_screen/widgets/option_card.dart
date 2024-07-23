@@ -64,7 +64,7 @@ class OptionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\Tk${amount}',
+                      '\Tk${amount/100}', //converting to dollars
                       style: Get.textTheme.bodyLarge,
                     ),
                   ],

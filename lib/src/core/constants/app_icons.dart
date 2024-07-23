@@ -7,7 +7,7 @@ class AppIcons {
   * =========== NavBar Icons ============
    */
   static const favoriteIcon = 'assets/icons/navigation-bar/heart.svg';
-  static const homeIcon = 'assets/icons/navigation-bar/home.svg';
+  static const homeIcon = 'assets/icons/navigation-bar/home.dart.svg';
   static const searchIcon = 'assets/icons/navigation-bar/search.svg';
   static const profileIcon = 'assets/icons/navigation-bar/user.svg';
 

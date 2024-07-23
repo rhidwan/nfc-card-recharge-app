@@ -24,7 +24,7 @@ class PrimaryOutlinedButton extends StatelessWidget {
     if (hasText) {
       return OutlinedButton(
         style: OutlinedButton.styleFrom(
-          textStyle: Get.textTheme.bodyMedium,
+          textStyle: Get.textTheme.bodyLarge,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Sizes.p6),
           ),

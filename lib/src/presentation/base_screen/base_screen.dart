@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habitual/src/presentation/connect_card_screen/view/connect_card.dart';
+import 'package:habitual/src/presentation/home_screen/view/homepage.dart';
 import '../profile_screen/profile_tab_screen.dart';
 import 'widgets/custom_bottom_navbar.dart';
 
@@ -13,7 +13,6 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   final pageController = PageController();
   final screens = [
-    const ConnectCardScreen(),
     const ProfileTabScreen(),
     // const SearchTabScreen(),
   ];

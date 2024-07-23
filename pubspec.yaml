@@ -57,6 +57,8 @@ dependencies:
   provider: ^6.1.1
   flutter_nfc_kit: ^3.4.1
   ndef: ^0.3.3
+  encrypt: ^5.0.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -95,6 +97,7 @@ flutter:
     - assets/images/search_screen/
     - assets/images/wishlist_screen/
     - assets/images/wishlist_screen/
+    - assets/card/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

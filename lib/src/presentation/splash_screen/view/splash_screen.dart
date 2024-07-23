@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
 
-import '../../../common_widgets/common_widgets_export.dart';
 import '../../../core/core_export.dart';
-import '../../../routes/routes_export.dart';
 
 class IntroductionScreen extends StatefulWidget {
   final Widget? child;

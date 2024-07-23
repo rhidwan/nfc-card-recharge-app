@@ -1,26 +1,32 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:habitual/src/common_widgets/svg_asset.dart';
+import 'package:habitual/src/core/constants/app_sizes.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+
+import '../core/constants/app_assets.dart';
 
 Future<void> startSession({
   required BuildContext context,
   required Future<String?> Function(NfcTag) handleTag,
-  String alertMessage = 'Hold your device near the card.',
+  String alertMessage = 'Bring your card near the device.',
 }) async {
-  if (!(await NfcManager.instance.isAvailable()))
+  if (!(await NfcManager.instance.isAvailable())) {
     return showDialog(
       context: context,
       builder: (context) => _UnavailableDialog(),
     );
+  }
 
-  if (Platform.isAndroid)
+  if (Platform.isAndroid) {
     return showDialog(
       context: context,
       builder: (context) => _AndroidSessionDialog(alertMessage, handleTag),
     );
+  }
 
-  if (Platform.isIOS)
+  if (Platform.isIOS) {
     return NfcManager.instance.startSession(
       alertMessage: alertMessage,
       onDiscovered: (tag) async {
@@ -33,7 +39,7 @@ Future<void> startSession({
         }
       },
     );
-
+  }
   throw('unsupported platform: ${Platform.operatingSystem}');
 }
 
@@ -41,11 +47,11 @@ class _UnavailableDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Error'),
-      content: Text('NFC may not be supported or may be temporarily turned off.'),
+      title: const Text('Error'),
+      content: const Text('NFC may not be supported or may be temporarily turned off.'),
       actions: [
         TextButton(
-          child: Text('GOT IT'),
+          child: const Text('GOT IT'),
           onPressed: () => Navigator.pop(context),
         ),
       ],
@@ -54,7 +60,7 @@ class _UnavailableDialog extends StatelessWidget {
 }
 
 class _AndroidSessionDialog extends StatefulWidget {
-  _AndroidSessionDialog(this.alertMessage, this.handleTag);
+  const _AndroidSessionDialog(this.alertMessage, this.handleTag);
 
   final String alertMessage;
 
@@ -66,7 +72,7 @@ class _AndroidSessionDialog extends StatefulWidget {
 
 class _AndroidSessionDialogState extends State<_AndroidSessionDialog> {
   String? _alertMessage;
-
+  bool _processing = false;
   String? _errorMessage;
 
   @override
@@ -75,16 +81,24 @@ class _AndroidSessionDialogState extends State<_AndroidSessionDialog> {
     NfcManager.instance.startSession(
       onDiscovered: (tag) async {
         try {
+          setState(() => _processing = true);
           final result = await widget.handleTag(tag);
+          setState(()=> _processing = false);
           if (result == null) return;
-          await NfcManager.instance.stopSession();
+
           setState(() => _alertMessage = result);
+          // await NfcManager.instance.stopSession();
         } catch (e) {
-          await NfcManager.instance.stopSession().catchError((_) { /* no op */ });
           setState(() => _errorMessage = '$e');
+          setState(()=> _processing = false);
+          await NfcManager.instance.stopSession().catchError((_) { /* no op */ });
         }
       },
-    ).catchError((e) => setState(() => _errorMessage = '$e'));
+    ).catchError((e) {
+      // console.log("setting alert message as false")
+      setState(() => _errorMessage = '$e');
+      setState(()=> _processing = false);
+    });
   }
 
   @override
@@ -96,15 +110,42 @@ class _AndroidSessionDialogState extends State<_AndroidSessionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        _errorMessage?.isNotEmpty == true ? 'Error' :
-        _alertMessage?.isNotEmpty == true ? 'Success' :
-        'Ready to scan',
+      backgroundColor: Colors.white,
+      title: Center(
+        child: Text(
+          _errorMessage?.isNotEmpty == true ? 'Error' :
+          _alertMessage?.isNotEmpty == true ? 'Attention' :
+          _processing ? "Processing" :
+          'Ready to scan',
+        ),
       ),
-      content: Text(
-        _errorMessage?.isNotEmpty == true ? _errorMessage! :
-        _alertMessage?.isNotEmpty == true ? _alertMessage! :
-        widget.alertMessage,
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+           Center(
+             child: _processing ? const Image(
+               image: AssetImage(AppAssets.appLogoPrimaryPng),
+               height: 100,
+             ) : SvgAsset(
+               assetPath: AppAssets.cardConnectIcon,
+               height: 100,
+               color:  _errorMessage?.isNotEmpty == true || _alertMessage?.isNotEmpty == true ?
+                        Colors.redAccent : Colors.black,
+             ),
+           ),
+          gapH8,
+            Text(
+            _errorMessage?.isNotEmpty == true ? _errorMessage! :
+            _alertMessage?.isNotEmpty == true ? _alertMessage! :
+            _processing ? "We are processing your card." :
+            widget.alertMessage,
+              style: TextStyle(
+                color: _errorMessage?.isNotEmpty == true || _alertMessage?.isNotEmpty == true ?
+                          Colors.redAccent : Colors.black
+              ),
+            )
+          ]
+        ),
       ),
       actions: [
         TextButton(

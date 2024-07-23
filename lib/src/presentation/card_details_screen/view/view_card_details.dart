@@ -1,8 +1,7 @@
-import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
 import 'package:habitual/src/common_widgets/custom_divider.dart';
 import 'package:habitual/src/common_widgets/nfc_sessions.dart';
@@ -10,83 +9,89 @@ import 'package:habitual/src/common_widgets/toast.dart';
 import 'package:habitual/src/core/utils/ntag_write.dart';
 import 'package:habitual/src/models/record.dart';
 import 'package:habitual/src/presentation/card_details_screen/widgets/option_card.dart';
-import 'package:habitual/src/routes/app_pages.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common_widgets/common_widgets_export.dart';
 import '../../../core/core_export.dart';
+import '../../../methods/auth/firebase_auth.dart';
 import '../../../models/write_record.dart';
-import '../../cart_screen/widgets/cart_product_card.dart';
+
 import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
 
-import '../../tag/read.dart';
+import '../../home_screen/view/homepage.dart';
+
+String getAmountString(int amount){
+  // amount will be in 6 digit
+  if (amount < 100) return "0000$amount"; //ex. 99
+  if (amount < 1000) return "000$amount"; //ex. 999
+  if (amount < 10000) return "00$amount"; // ex. 9899
+  if (amount < 100000) return "0$amount"; //ex. 98999
+  return "$amount";
+
+}
+
 class NdefWriteModel with ChangeNotifier {
   // NdefWriteModel();
 
+  Future<String?> handleTag(NfcTag tag, String suffix, int amount, bool isRecharge, int currentBalance) async {
 
-  Future<String?> handleTag(NfcTag tag, text) async {
-    Iterable<WriteRecord> recordList = [];
+    var newBalance  = 0;
+    if (isRecharge){
+      newBalance = currentBalance + amount;
+    } else{
+      newBalance = amount;
+    }
 
-
+    var text = suffix + getAmountString(newBalance);
     var textRecord = WellknownTextRecord(languageCode: "en", text: text);
-    recordList = [
+    Iterable<WriteRecord> recordList = [
       WriteRecord(id: 1, record: textRecord.toNdef())
     ];
 
     final tech = Ndef.from(tag);
     final card = NfcA.from(tag);
 
-    if (tech == null){
-      showToast(message: "Tag is not ndef");
+    if (tech == null || card == null){
+      showToast(message: "Tag is not ndef", type: "error");
       Get.back();
       return "";
     }
+
     if (!tech.isWritable){
-      showToast(message:'Tag is not ndef writable.');
+      showToast(message:'Tag is not ndef writable.', type: "error");
       Get.back();
       return "";
     }
 
     try {
-      final message = NdefMessage(recordList.map((e) => e.record).toList());
       final bytes = Uint8List.fromList([0x1B, 0x32, 0x32, 0x32, 0x32]);
       try {
-        var resp = await card!.transceive(data: bytes );
+        await card.transceive(data: bytes );
 
-        print(resp);
         await Future.delayed(const Duration(milliseconds: 1000));
       } on Exception catch(e){
-        print(e);
-        showToast(message: "Authentication Failed");
+        showToast(message: "Authentication Failed", type: "error");
       }
+
       try{
+        // print("text to write : $text" );
         await ntag2xxWriteText(card, text);
       }on Exception catch(e){
-        showToast(message: e.toString());
+        showToast(message: e.toString(), type: "error");
         return e.toString();
       }
-      // try{
-      //   await tech.write(message);
-      // }on Exception catch(e){
-      //   print(e);
-      //   showToast(message: e.toString());
-      //   return "Something is wrong";
-      // }
-
-      
 
     } on PlatformException catch (e) {
-      showToast(message:'Some error has occured.');
+      showToast(message:'Some error has occurred.', type: "error");
       Get.back();
       return "";
       // return e.message ?? 'Some error has occurred.' ;
     }
     notifyListeners();
-    showToast(message: "Recharge Successful");
-    return Get.to(() => TagReadPage());
+    showToast(message: "Recharge Successful", type: "success");
+    return Get.to(() => HomePage());
     // return Get.to(CardDetailsScreen());
     // return 'Recharge completed';
   }
@@ -105,13 +110,19 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
   final pageController = PageController(initialPage: 0);
   var rechargeLoading = false;
 
+
   var rechargeAmount = 0;
   var lastRecharge = "";
   var balance = 0;
+  var balanceCharLen = 6;
+  var uid = "";
+  var uids = [];
+  List cardUID = [];
   var rechargeOptions = [
-    200, 300, 500
+    20000, 30000, 50000, 40000 //In cents
   ];
-  var recordsTowrite = "entestToWriteFromFLUTTER";
+  var recordsToWrite = "" ;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TagReadModel>(builder: (context, model, _) {
@@ -119,17 +130,57 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
       if (tag  == null) {
         return const Text("Invalid Card");
       }
-      final uids  = NfcA.from(tag)?.identifier ??
+      uids  = NfcA.from(tag)?.identifier ??
                   NfcB.from(tag)?.identifier ??
                   NfcF.from(tag)?.identifier ??
                   NfcV.from(tag)?.identifier ??
                   Uint8List(0);
-      final uid = uids.join(" ");
+      uid = uids.join(" ");
+      int currentBalance = 0;
+      final ndef = Ndef.from(tag);
+      if (ndef != null && ndef.cachedMessage != null) {
+        String tempRecord = "";
 
-      final additionalData = model.additionalData;
-      print(tag);
+        for (var record in ndef.cachedMessage!.records) {
 
-    final itemCount = 1.obs;
+          try{
+            cardUID = record.payload.sublist(3, 10);
+          } catch(e){
+            showToast(message: "Card Invalid, Please try a valid one", type: "error");
+            Get.back();
+          }
+
+            // recordsToWrite = recordsToWrite + String.fromCharCodes( record.payload.sublist(3, 10));
+          recordsToWrite = "en${String.fromCharCodes(Iterable.castFrom(uids))}";
+
+          if (const ListEquality().equals(cardUID, uids)){
+            //Card is valid
+            String balanceEntry;
+            try{
+              balanceEntry = String.fromCharCodes(record.payload.sublist(10, 10 + balanceCharLen));
+            } catch (e) {
+              balanceEntry = "0";
+            };
+            currentBalance = int.parse(balanceEntry);
+          }else{
+            // Card is Invalid
+            showToast(message: "Card Invalid, Please try a valid one", type: "error");
+            return const Text("Invalid card");
+            // Get.to(() =>  TagReadPage());
+            // Get.back();
+            // Get.back();
+          }
+          tempRecord =
+          "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
+        }
+
+      } else {
+        // Show a snackbar for example
+      }
+      // final additionalData = model.additionalData;
+      // print(tag);
+
+    // final itemCount = 1.obs;
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: rechargeAmount != 0 ?  AnimatedSwitcher(
@@ -154,29 +205,24 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
               color: AppColors.yellow300,
             ),
             height: Sizes.deviceHeight * .12,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                gapH8,
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Recharge Card with ',
+                      'Set Balance/Recharge Card with ',
                       style: Get.textTheme.titleLarge,
                     ),
-                    gapH4,
                     // PRICE
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             //* SELLING PRICE
                             Text(
-                              'Tk${rechargeAmount}',
+                              'Tk${rechargeAmount/100}',
                               style: Get.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -188,20 +234,33 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     ),
                   ],
                 ),
-                gapW24,
-                 PrimaryButton(
-                      buttonWidth: 150,
-                      buttonHeight: 50,
-                      buttonColor: AppColors.neutral800,
-                      buttonLabel:   "Recharge",
-                      onPressed: () => startSession(context: context,
-                        handleTag:(tag) => Provider.of<NdefWriteModel>(context, listen: false).handleTag(tag, recordsTowrite),
-                      )
+                gapH8,
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                   PrimaryOutlinedButton(hasText: true,
+                      title: "Set Balance",
+                      width: 150,
+                     height: 50,
+                       onPressed: () => startSession(context: context,
+                         handleTag:(tag) => Provider.of<NdefWriteModel>(context, listen: false).handleTag(tag,  recordsToWrite, rechargeAmount, false, currentBalance),
+                       )
+                   ),
+                   PrimaryButton(
+                        buttonWidth: 150,
+                        buttonHeight: 41,
+                        buttonColor: AppColors.neutral800,
+                        buttonLabel:   "Recharge",
+                        onPressed: () => startSession(context: context,
+                          handleTag:(tag) => Provider.of<NdefWriteModel>(context, listen: false).handleTag(tag,  recordsToWrite, rechargeAmount, true, currentBalance),
+                        )
 
-                  )
-               ,
+                    )
 
-              ],
+                ],
+              ),
+
+              ]
             ),
           ),
         ) : null,
@@ -215,8 +274,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                   top: Sizes.p16,
                   bottom: Sizes.p16,
                 ),
-                child: SvgAsset(
-                  assetPath: AppAssets.appLogoBlackSmall,
+                child: Image(
+                    image: AssetImage(AppAssets.appLogoPrimaryPng),
+                    height: 50,
                 ),
               ),
               actions: [
@@ -225,12 +285,12 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     right: Sizes.p24,
                   ),
                   child: PrimaryIconButton(
-                    icon: AppIcons.shoppingCartIcon,
-                    onPressed: () => Get.offAllNamed(
-                      AppRoutes.productDetailsRoute,
-                    ),
-                  ),
-                ),
+                    icon: AppIcons.logoutIcon,
+                    onPressed: () => {
+                      FirebaseAuthService.instance.logOut()
+                    },
+                  )
+                )
               ],
             ),
           ],
@@ -254,7 +314,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
 
                         gapH16,
                         //* Credit Card
-                        const CreditCardEmpty(),
+                        CreditCard(cardNumber: uid , lastRecharge: "1/2", balance: "${currentBalance/100}"),
 
                         gapH8,
 
@@ -270,25 +330,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                               ),
                             ),
                             Text(
-                              '${uid}',
-                              style: Get.textTheme.titleLarge?.copyWith(
-                                fontWeight: Fonts.interRegular,
-                              ),
-                            ),
-                          ],
-                        ),
-                        gapH8,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'last Recharge',
-                              style: Get.textTheme.displayLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '12/2023',
+                              uid,
                               style: Get.textTheme.titleLarge?.copyWith(
                                 fontWeight: Fonts.interRegular,
                               ),
@@ -306,7 +348,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                               ),
                             ),
                             Text(
-                              '\$79.99',
+                              'Tk ${currentBalance/100}', //converting to dollars
                               style: Get.textTheme.titleLarge?.copyWith(
                                 fontWeight: Fonts.interRegular,
                               ),
@@ -335,7 +377,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                         SizedBox(
                           height: Sizes.deviceHeight * .15,
                           child: ListView.separated(
-                            itemCount: 3,
+                            itemCount: rechargeOptions.length,
                             scrollDirection: Axis.horizontal,
                             separatorBuilder: (_, index) => gapW16,
                             itemBuilder: ( _ , index) => OptionCard(
@@ -345,7 +387,8 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                               onTap: () {
                                 setState(() {
                                   rechargeAmount = rechargeAmount == rechargeOptions[index] ?
-                                                    0 : rechargeOptions[index] ;
+                                                    0 : rechargeOptions[index];
+
                                 });
                               },
                             ),
