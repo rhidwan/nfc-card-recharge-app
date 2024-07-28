@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:habitual/src/presentation/bulk_recharge_screen/view/bulk_recharge.dart';
-import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
+import 'package:PureDrop/src/presentation/bulk_recharge_screen/view/bulk_recharge.dart';
+import 'package:PureDrop/src/presentation/card_details_screen/view/view_card_details.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +19,10 @@ import '../../../core/utils/ntag_write.dart';
 import '../../../models/write_record.dart';
 import '../widgets/staggered_category_card.dart';
 import 'package:get/get.dart';
-import 'package:habitual/main.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/main.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
 
-import 'package:habitual/src/methods/auth/firebase_auth.dart';
+import 'package:PureDrop/src/methods/auth/firebase_auth.dart';
 
 
 String greetings(){
@@ -211,7 +211,8 @@ class HomePage extends StatelessWidget {
           handleTag: Provider.of<TagReadModel>(context, listen: false).handleTag,
         ),
         "icon" : AppAssets.cardInfoIcon,
-        "color" : AppColors.blue300
+        "color" : AppColors.fromHex("C2B8D7")
+
       },
       {
         "name" : "Bulk Recharge",
@@ -219,7 +220,7 @@ class HomePage extends StatelessWidget {
             Get.to(() => const BulkRechargeScreen())
         },
         "icon" : AppAssets.cardRechargeIcon,
-        "color" : AppColors.purple300
+        "color" : AppColors.fromHex("B8D7D1")
       },
 
       {
@@ -229,7 +230,7 @@ class HomePage extends StatelessWidget {
           handleTag: (tag) => Provider.of<TagInitiateModel>(context, listen: false).handleTag(tag),
         ),
         "icon" : AppAssets.cardRefillIcon,
-        "color" : AppColors.red300
+        "color" : AppColors.fromHex("CDD7B8")
       },
       {
         "name" : "Invalidate Card",
@@ -238,7 +239,7 @@ class HomePage extends StatelessWidget {
           handleTag: (tag) => Provider.of<TagInvalidateModel>(context, listen: false).handleTag(tag),
         ),
         "icon" : AppAssets.cardRemoveIcon,
-        "color" : AppColors.green300
+        "color" : AppColors.fromHex("D7B8BE")
       }
 
     ];

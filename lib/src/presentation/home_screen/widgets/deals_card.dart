@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
 
 import '../../../core/core_export.dart';
 import 'favorite_button_widget.dart';

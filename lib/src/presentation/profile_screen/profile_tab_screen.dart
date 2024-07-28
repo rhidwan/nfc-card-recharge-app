@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/presentation/profile_screen/widgets/account_card.dart';
-import 'package:habitual/src/presentation/profile_screen/widgets/order_card.dart';
-import 'package:habitual/src/presentation/profile_screen/widgets/profile_biography_field.dart';
-import 'package:habitual/src/routes/app_pages.dart';
+import 'package:PureDrop/src/presentation/profile_screen/widgets/account_card.dart';
+import 'package:PureDrop/src/presentation/profile_screen/widgets/order_card.dart';
+import 'package:PureDrop/src/presentation/profile_screen/widgets/profile_biography_field.dart';
+import 'package:PureDrop/src/routes/app_pages.dart';
 
 import '../../common_widgets/common_widgets_export.dart';
 import '../../core/core_export.dart';

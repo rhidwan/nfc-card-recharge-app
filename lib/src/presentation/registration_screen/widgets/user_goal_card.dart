@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/core/core_export.dart';
+import 'package:PureDrop/src/core/core_export.dart';
 
 class UserGoalCard extends StatelessWidget {
   const UserGoalCard({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habitual/src/core/core_export.dart';
+import 'package:PureDrop/src/core/core_export.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomShimmer extends StatelessWidget {

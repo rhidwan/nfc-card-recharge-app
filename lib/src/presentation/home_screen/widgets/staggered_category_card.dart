@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
-import 'package:habitual/src/core/constants/app_assets.dart';
-import 'package:habitual/src/core/constants/app_fonts.dart';
-import 'package:habitual/src/core/constants/app_sizes.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/core/constants/app_assets.dart';
+import 'package:PureDrop/src/core/constants/app_fonts.dart';
+import 'package:PureDrop/src/core/constants/app_sizes.dart';
 
 class CardButton extends StatelessWidget {
   final color;

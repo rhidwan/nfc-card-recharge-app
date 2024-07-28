@@ -1,4 +1,4 @@
-package com.edilsonmatola.habitual
+package com.iqbal.wateratm
 
 import io.flutter.embedding.android.FlutterActivity
 

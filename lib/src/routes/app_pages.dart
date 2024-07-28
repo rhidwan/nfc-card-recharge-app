@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
-import 'package:habitual/src/presentation/authentication_screen/view/sign_up_screen.dart';
-import 'package:habitual/src/presentation/connect_card_screen/view/checkout_confirmation_screen.dart';
-import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
-import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
-import 'package:habitual/src/presentation/registration_screen/view/registration_completed.dart';
+import 'package:PureDrop/src/presentation/authentication_screen/view/sign_in_screen.dart';
+import 'package:PureDrop/src/presentation/authentication_screen/view/sign_up_screen.dart';
+import 'package:PureDrop/src/presentation/connect_card_screen/view/checkout_confirmation_screen.dart';
+import 'package:PureDrop/src/presentation/splash_screen/view/splash_screen.dart';
+import 'package:PureDrop/src/presentation/card_details_screen/view/view_card_details.dart';
+import 'package:PureDrop/src/presentation/registration_screen/view/registration_completed.dart';
 
 import '../presentation/base_screen/base_screen.dart';
 import '../presentation/registration_screen/view/registration1_screen.dart';

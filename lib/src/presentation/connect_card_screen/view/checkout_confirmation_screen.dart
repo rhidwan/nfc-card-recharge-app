@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
-import 'package:habitual/src/routes/app_pages.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/src/routes/app_pages.dart';
 
 import '../../../core/core_export.dart';
 

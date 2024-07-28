@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:habitual/src/core/utils/extensions.dart';
+import 'package:PureDrop/src/core/utils/extensions.dart';
 
 Future<Uint8List> ntag2xxWritePage(int page, Uint8List data, tag) async {
   // TAG Type       PAGES   USER START    USER STOP

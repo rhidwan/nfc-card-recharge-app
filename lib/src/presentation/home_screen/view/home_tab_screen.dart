@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
-import 'package:habitual/src/presentation/home_screen/widgets/deals_card.dart';
-import 'package:habitual/src/presentation/home_screen/widgets/my_interests_card.dart';
-import 'package:habitual/src/routes/app_pages.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/presentation/home_screen/widgets/deals_card.dart';
+import 'package:PureDrop/src/presentation/home_screen/widgets/my_interests_card.dart';
+import 'package:PureDrop/src/routes/app_pages.dart';
 
 import '../../../core/core_export.dart';
 import '../widgets/home_category_card.dart';

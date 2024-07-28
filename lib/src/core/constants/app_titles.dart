@@ -2,8 +2,8 @@ abstract class AppTitles {
   /* 
   * ====== AppBar Screen Titles ======
    */
-  static const introTitle = "Welcome to the world's largest you store.";
-  static const appTitle = 'Habitual';
+  static const introTitle = "Welcome to PureDrop Solution.";
+  static const appTitle = 'PureDrop';
   static const whishlistTitle = 'Wishlist';
   static const cartTitle = 'Cart';
   static const checkoutTitle = 'Checkout';

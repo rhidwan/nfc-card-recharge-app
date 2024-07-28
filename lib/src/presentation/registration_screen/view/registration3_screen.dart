@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
-import 'package:habitual/src/core/core_export.dart';
-import 'package:habitual/src/presentation/registration_screen/widgets/registration_progress_bar.dart';
-import 'package:habitual/src/presentation/registration_screen/widgets/user_goal_card.dart';
-import 'package:habitual/src/routes/routes_export.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/src/core/core_export.dart';
+import 'package:PureDrop/src/presentation/registration_screen/widgets/registration_progress_bar.dart';
+import 'package:PureDrop/src/presentation/registration_screen/widgets/user_goal_card.dart';
+import 'package:PureDrop/src/routes/routes_export.dart';
 
 class Registration3Screen extends StatefulWidget {
   const Registration3Screen({super.key});
@@ -49,7 +49,7 @@ class _Registration3ScreenState extends State<Registration3Screen> {
                         child: Column(
                           children: [
                             Text(
-                              'What do you want to achieve with Habitual?',
+                              'What do you want to achieve with PureDrop?',
                               style: Get.textTheme.headlineSmall,
                               textAlign: TextAlign.center,
                             ),

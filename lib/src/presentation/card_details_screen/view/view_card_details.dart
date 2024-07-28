@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/custom_divider.dart';
-import 'package:habitual/src/common_widgets/nfc_sessions.dart';
-import 'package:habitual/src/common_widgets/toast.dart';
-import 'package:habitual/src/core/utils/ntag_write.dart';
-import 'package:habitual/src/models/record.dart';
-import 'package:habitual/src/presentation/card_details_screen/widgets/option_card.dart';
+import 'package:PureDrop/src/common_widgets/custom_divider.dart';
+import 'package:PureDrop/src/common_widgets/nfc_sessions.dart';
+import 'package:PureDrop/src/common_widgets/toast.dart';
+import 'package:PureDrop/src/core/utils/ntag_write.dart';
+import 'package:PureDrop/src/models/record.dart';
+import 'package:PureDrop/src/presentation/card_details_screen/widgets/option_card.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ import '../../../core/core_export.dart';
 import '../../../methods/auth/firebase_auth.dart';
 import '../../../models/write_record.dart';
 
-import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
+import 'package:PureDrop/src/presentation/connect_card_screen/widgets/credit_card.dart';
 
 import '../../home_screen/view/homepage.dart';
 
@@ -54,13 +54,13 @@ class NdefWriteModel with ChangeNotifier {
     final card = NfcA.from(tag);
 
     if (tech == null || card == null){
-      showToast(message: "Tag is not ndef", type: "error");
+      showToast(message: "Card invalid! Tag is not ndef formatted", type: "error");
       Get.back();
       return "";
     }
 
     if (!tech.isWritable){
-      showToast(message:'Tag is not ndef writable.', type: "error");
+      showToast(message:'Card Invalid! Tag is not ndef writable.', type: "error");
       Get.back();
       return "";
     }
@@ -72,7 +72,7 @@ class NdefWriteModel with ChangeNotifier {
 
         await Future.delayed(const Duration(milliseconds: 1000));
       } on Exception catch(e){
-        showToast(message: "Authentication Failed", type: "error");
+        showToast(message: "Invalid Card! Authentication Failed", type: "error");
       }
 
       try{
@@ -84,7 +84,7 @@ class NdefWriteModel with ChangeNotifier {
       }
 
     } on PlatformException catch (e) {
-      showToast(message:'Some error has occurred.', type: "error");
+      showToast(message:'Oops! Something went wrong, Please try again.', type: "error");
       Get.back();
       return "";
       // return e.message ?? 'Some error has occurred.' ;
@@ -127,58 +127,62 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
   Widget build(BuildContext context) {
     return Consumer<TagReadModel>(builder: (context, model, _) {
       final tag = model.tag;
-      if (tag  == null) {
-        return const Text("Invalid Card");
-      }
-      uids  = NfcA.from(tag)?.identifier ??
-                  NfcB.from(tag)?.identifier ??
-                  NfcF.from(tag)?.identifier ??
-                  NfcV.from(tag)?.identifier ??
-                  Uint8List(0);
-      uid = uids.join(" ");
       int currentBalance = 0;
-      final ndef = Ndef.from(tag);
-      if (ndef != null && ndef.cachedMessage != null) {
-        String tempRecord = "";
+      if (tag  == null) {
+        Get.back();
+        showToast(message: "Card Invalid, Please try a valid one", type: "error");
+      } else{
 
-        for (var record in ndef.cachedMessage!.records) {
+        uids  = NfcA.from(tag)?.identifier ??
+            NfcB.from(tag)?.identifier ??
+            NfcF.from(tag)?.identifier ??
+            NfcV.from(tag)?.identifier ??
+            Uint8List(0);
+        uid = uids.join(" ");
 
-          try{
-            cardUID = record.payload.sublist(3, 10);
-          } catch(e){
-            showToast(message: "Card Invalid, Please try a valid one", type: "error");
-            Get.back();
-          }
+        final ndef = Ndef.from(tag);
+        if (ndef != null && ndef.cachedMessage != null) {
+          String tempRecord = "";
+
+          for (var record in ndef.cachedMessage!.records) {
+
+            try{
+              cardUID = record.payload.sublist(3, 10);
+            } catch(e){
+              Get.back();
+              showToast(message: "Card Invalid, Please make sure the card is initiated successfully.", type: "error");
+
+            }
 
             // recordsToWrite = recordsToWrite + String.fromCharCodes( record.payload.sublist(3, 10));
-          recordsToWrite = "en${String.fromCharCodes(Iterable.castFrom(uids))}";
+            recordsToWrite = "en${String.fromCharCodes(Iterable.castFrom(uids))}";
 
-          if (const ListEquality().equals(cardUID, uids)){
-            //Card is valid
-            String balanceEntry;
-            try{
-              balanceEntry = String.fromCharCodes(record.payload.sublist(10, 10 + balanceCharLen));
-            } catch (e) {
-              balanceEntry = "0";
-            };
-            currentBalance = int.parse(balanceEntry);
-          }else{
-            // Card is Invalid
-            showToast(message: "Card Invalid, Please try a valid one", type: "error");
-            return const Text("Invalid card");
-            // Get.to(() =>  TagReadPage());
-            // Get.back();
-            // Get.back();
+            if (const ListEquality().equals(cardUID, uids)){
+              //Card is valid
+              String balanceEntry;
+              try{
+                balanceEntry = String.fromCharCodes(record.payload.sublist(10, 10 + balanceCharLen));
+              } catch (e) {
+                balanceEntry = "0";
+              };
+              currentBalance = int.parse(balanceEntry);
+            }else{
+              // Card is Invalid
+              Get.back();
+              showToast(message: "Card Invalid, Please initiate the card before you use it. ", type: "error");
+
+              // Get.back();
+            }
+            tempRecord =
+            "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
           }
-          tempRecord =
-          "$tempRecord ${String.fromCharCodes(record.payload.sublist(record.payload[0] + 1))}";
+
+        } else {
+          showToast(message: "Card Invalid, Please try a valid one", type: "error");
+          Get.back();
         }
 
-      } else {
-        // Show a snackbar for example
       }
-      // final additionalData = model.additionalData;
-      // print(tag);
 
     // final itemCount = 1.obs;
     return SafeArea(

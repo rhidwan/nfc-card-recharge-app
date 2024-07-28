@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:habitual/src/core/constants/app_assets.dart';
-import 'package:habitual/src/core/constants/app_colors.dart';
-import 'package:habitual/src/core/constants/app_sizes.dart';
+import 'package:PureDrop/src/core/constants/app_assets.dart';
+import 'package:PureDrop/src/core/constants/app_colors.dart';
+import 'package:PureDrop/src/core/constants/app_sizes.dart';
 
 class CreditCard extends StatelessWidget {
   final String cardNumber;

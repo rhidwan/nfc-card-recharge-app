@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/methods/auth/firebase_auth.dart';
+import 'package:PureDrop/src/methods/auth/firebase_auth.dart';
 
 import '../../../common_widgets/common_widgets_export.dart';
 import '../../../common_widgets/forms/custom_text_field.dart';
@@ -44,9 +44,9 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: Column(
               children: [
-                SvgPicture.asset(
-                  AppAssets.appLogoBlack,
-                ),
+                gapH48,
+                Image(image: AssetImage(AppAssets.appLogoPrimaryPng),
+              height: 100,),
                 gapH48,
                 Text(
                   'Sign in to your account',
@@ -74,25 +74,25 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 ),
                 gapH24,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Dont have an account?',
-                      style: Get.textTheme.bodyMedium,
-                    ),
-                    PrimaryTextButton(
-                      defaultTextStyle: false,
-                      style: Get.textTheme.bodyMedium?.copyWith(
-                        decoration: TextDecoration.underline,
-                      ),
-                      buttonLabel: 'Sign up',
-                      onPressed: () => Get.toNamed(
-                        AppRoutes.signUpRoute,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Dont have an account?',
+                //       style: Get.textTheme.bodyMedium,
+                //     ),
+                //     PrimaryTextButton(
+                //       defaultTextStyle: false,
+                //       style: Get.textTheme.bodyMedium?.copyWith(
+                //         decoration: TextDecoration.underline,
+                //       ),
+                //       buttonLabel: 'Sign up',
+                //       onPressed: () => Get.toNamed(
+                //         AppRoutes.signUpRoute,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

@@ -1,21 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/main.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
-import 'package:habitual/src/common_widgets/custom_divider.dart';
-import 'package:habitual/src/methods/auth/firebase_auth.dart';
-import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
+import 'package:PureDrop/main.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/src/common_widgets/custom_divider.dart';
+import 'package:PureDrop/src/methods/auth/firebase_auth.dart';
+import 'package:PureDrop/src/presentation/connect_card_screen/widgets/credit_card.dart';
 
-import 'package:habitual/src/routes/app_pages.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/routes/app_pages.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
 
 import 'dart:io';
 import 'dart:typed_data';
 
 
 import 'package:flutter/material.dart';
-import 'package:habitual/src/core/utils/extensions.dart';
+import 'package:PureDrop/src/core/utils/extensions.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:provider/provider.dart';

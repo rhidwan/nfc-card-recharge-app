@@ -1,5 +1,5 @@
-name: habitual
-description: Habitual E-commerce
+name: PureDrop
+description: PureDrop Water Solution
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -87,16 +87,6 @@ flutter:
     - assets/icons/navigation-bar/
     - assets/icons/social-media/
     - assets/icons/others/
-    - assets/images/
-    - assets/images/delivery_screen/
-    - assets/images/intro_screen/
-    - assets/images/intro_screen/paralax-background/
-    - assets/images/order_screen/
-    - assets/images/product_screen/
-    - assets/images/profile_screen/
-    - assets/images/search_screen/
-    - assets/images/wishlist_screen/
-    - assets/images/wishlist_screen/
     - assets/card/
 
   # An image asset can refer to one or more resolution-specific "variants", see

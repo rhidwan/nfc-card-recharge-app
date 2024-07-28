@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/custom_divider.dart';
-import 'package:habitual/src/common_widgets/nfc_sessions.dart';
-import 'package:habitual/src/common_widgets/toast.dart';
-import 'package:habitual/src/core/utils/ntag_write.dart';
-import 'package:habitual/src/models/record.dart';
-import 'package:habitual/src/presentation/card_details_screen/widgets/option_card.dart';
-import 'package:habitual/src/routes/app_pages.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/common_widgets/custom_divider.dart';
+import 'package:PureDrop/src/common_widgets/nfc_sessions.dart';
+import 'package:PureDrop/src/common_widgets/toast.dart';
+import 'package:PureDrop/src/core/utils/ntag_write.dart';
+import 'package:PureDrop/src/models/record.dart';
+import 'package:PureDrop/src/presentation/card_details_screen/widgets/option_card.dart';
+import 'package:PureDrop/src/routes/app_pages.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ import '../../../core/core_export.dart';
 import '../../../methods/auth/firebase_auth.dart';
 import '../../../models/write_record.dart';
 
-import 'package:habitual/src/presentation/connect_card_screen/widgets/credit_card.dart';
+import 'package:PureDrop/src/presentation/connect_card_screen/widgets/credit_card.dart';
 
 import '../../home_screen/view/homepage.dart';
 

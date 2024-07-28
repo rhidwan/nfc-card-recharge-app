@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/svg_asset.dart';
-import 'package:habitual/src/core/core_export.dart';
+import 'package:PureDrop/src/common_widgets/svg_asset.dart';
+import 'package:PureDrop/src/core/core_export.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

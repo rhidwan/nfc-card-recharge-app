@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:habitual/l10n/string_hardcoded.dart';
-import 'package:habitual/src/methods/auth/firebase_auth.dart';
-import 'package:habitual/src/presentation/authentication_screen/view/sign_in_screen.dart';
-import 'package:habitual/src/presentation/bulk_recharge_screen/view/bulk_recharge.dart';
-import 'package:habitual/src/presentation/card_details_screen/view/view_card_details.dart';
-import 'package:habitual/src/presentation/splash_screen/view/splash.dart';
-import 'package:habitual/src/presentation/splash_screen/view/splash_screen.dart';
-import 'package:habitual/src/presentation/home_screen/view/homepage.dart';
+import 'package:PureDrop/l10n/string_hardcoded.dart';
+import 'package:PureDrop/src/methods/auth/firebase_auth.dart';
+import 'package:PureDrop/src/presentation/authentication_screen/view/sign_in_screen.dart';
+import 'package:PureDrop/src/presentation/bulk_recharge_screen/view/bulk_recharge.dart';
+import 'package:PureDrop/src/presentation/card_details_screen/view/view_card_details.dart';
+import 'package:PureDrop/src/presentation/splash_screen/view/splash.dart';
+import 'package:PureDrop/src/presentation/splash_screen/view/splash_screen.dart';
+import 'package:PureDrop/src/presentation/home_screen/view/homepage.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
-      onGenerateTitle: (context) => 'My App'.hardcoded,
+      onGenerateTitle: (context) => 'PureDrop'.hardcoded,
       theme: AppThemes().lightTheme,
       darkTheme: AppThemes().darkTheme,
       title: AppTitles.appTitle,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habitual/src/presentation/home_screen/view/homepage.dart';
+import 'package:PureDrop/src/presentation/home_screen/view/homepage.dart';
 import '../profile_screen/profile_tab_screen.dart';
 import 'widgets/custom_bottom_navbar.dart';
 

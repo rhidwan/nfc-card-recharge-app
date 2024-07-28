@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/common_widgets/common_widgets_export.dart';
-import 'package:habitual/src/common_widgets/custom_divider.dart';
-import 'package:habitual/src/common_widgets/forms/custom_text_field.dart';
-import 'package:habitual/src/routes/routes_export.dart';
+import 'package:PureDrop/src/common_widgets/common_widgets_export.dart';
+import 'package:PureDrop/src/common_widgets/custom_divider.dart';
+import 'package:PureDrop/src/common_widgets/forms/custom_text_field.dart';
+import 'package:PureDrop/src/routes/routes_export.dart';
 
 import '../../../core/core_export.dart';
 

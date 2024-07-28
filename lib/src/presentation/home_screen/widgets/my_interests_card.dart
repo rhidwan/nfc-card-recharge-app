@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habitual/src/core/core_export.dart';
-import 'package:habitual/src/presentation/home_screen/widgets/my_interests_product_card.dart';
+import 'package:PureDrop/src/core/core_export.dart';
+import 'package:PureDrop/src/presentation/home_screen/widgets/my_interests_product_card.dart';
 
 import '../../../common_widgets/common_widgets_export.dart';
 
